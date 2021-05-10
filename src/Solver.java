@@ -2,12 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Solver {
-    public enum direction {
-        N,
-        E,
-        S,
-        W,
-    }
     private Square[][] matrix;
     private boolean stopper = false;
     private int maxDimensions;
@@ -30,9 +24,41 @@ public class Solver {
         }
         if (matrix[x][y].getColor() == 1) {
             matrix[x][y].updateColor(2);
-            // solveMaze(x, y, possibleDirections[0]);
+            stopper = true;
+            solverMaze(x, y);
         }
         solveMaze(x, y+1);
         solveMaze(x+1, 0);
+    }
+
+    public void solverMaze(int x, int y) {
+        try {
+            if (matrix[x][y + 1].getColor() == 1) {
+                matrix[x][y + 1].updateColor(2);
+                solverMaze(x, y + 1);
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {}
+        try {
+            if (matrix[x][y - 1].getColor() == 1) {
+                matrix[x][y - 1].updateColor(2);
+                solverMaze(x, y - 1);
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {}
+        try {
+            if (matrix[x + 1][y].getColor() == 1) {
+                matrix[x + 1][y].updateColor(2);
+                solverMaze(x + 1, y);
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {}
+        try {
+            if (matrix[x - 1][y].getColor() == 1) {
+                matrix[x - 1][y].updateColor(2);
+                solverMaze(x - 1, y);
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {}
     }
 }
